@@ -1,0 +1,349 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kẻ thách thức Khoa học Tự Nhiên</title>
+<style>
+:root{--bg:#060d18;--panel:#0d1828;--panel2:#12243b;--line:#29425f;--text:#eef6ff;--muted:#9db1c9;--accent:#62aaff;--good:#34d399;--bad:#fb7185;--gold:#fbbf24;--purple:#a855f7;--cyan:#67e8f9}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--text);background:radial-gradient(circle at top,#132e54 0,#060d18 48%,#02050a 100%);min-height:100vh}
+button,input,select{font:inherit}button{cursor:pointer;border:0;border-radius:12px;padding:10px 14px;background:var(--accent);color:#06101c;font-weight:800}button.secondary{background:#213650;color:var(--text)}button.good{background:var(--good)}button.gold{background:var(--gold)}button.danger{background:var(--bad);color:#28050c}button:disabled{opacity:.45;cursor:not-allowed}
+#app{max-width:1280px;margin:auto;padding:18px}.top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px}.logo{font-weight:950;font-size:22px}.sub,.muted{color:var(--muted)}.small{font-size:12px}.card{background:rgba(13,24,40,.94);border:1px solid var(--line);border-radius:18px;padding:16px;box-shadow:0 14px 40px rgba(0,0,0,.22)}.auth{max-width:500px;margin:7vh auto}.auth h1{margin-top:0}.field{display:grid;gap:7px;margin:10px 0}.field input,.field select,input.roomInput{width:100%;padding:11px 12px;background:#071423;color:var(--text);border:1px solid var(--line);border-radius:10px}.row{display:flex;gap:9px;flex-wrap:wrap;align-items:center}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.grid4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.stat{background:#081522;border:1px solid var(--line);border-radius:14px;padding:12px}.stat b{font-size:21px}.tag{display:inline-block;padding:4px 8px;border-radius:999px;background:#1d3553;font-size:11px;color:#d8e8ff}.sectionTitle{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px}.hidden{display:none!important}
+.nav{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;margin:13px 0}.nav button{background:#102238;color:var(--text);border:1px solid var(--line)}.nav button.active{background:var(--accent);color:#06101c}.menu{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.menu button{text-align:left;padding:16px;background:linear-gradient(135deg,#173762,#0e1e33);color:var(--text);border:1px solid var(--line)}.menu strong{display:block;font-size:18px;margin-bottom:5px}.menu span{font-size:12px;color:#bfd0e6}
+.progress{height:10px;background:#06101b;border:1px solid var(--line);border-radius:999px;overflow:hidden}.progress>div{height:100%;background:linear-gradient(90deg,#5aa9ff,#8ae6ff)}.hp{height:14px;background:#260e16;border-radius:999px;overflow:hidden}.hp>div{height:100%;background:linear-gradient(90deg,#fb7185,#ef4444)}.shield{height:10px;background:#0c2632;border-radius:999px;overflow:hidden}.shield>div{height:100%;background:linear-gradient(90deg,#22d3ee,#38bdf8)}
+.diffCard,.shopItem,.petCard,.equipCard,.bossCard,.worldBossCard{background:#091624;border:1px solid var(--line);border-radius:15px;padding:13px}.diffCard{cursor:pointer}.diffCard:hover,.bossCard:hover,.worldBossCard:hover{border-color:#4f78a2;transform:translateY(-1px)}.diffCard.locked{opacity:.5;cursor:not-allowed}.quest{font-size:22px;font-weight:850;line-height:1.4;margin:14px 0}.answers{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.answers button{background:#12283f;color:var(--text);border:1px solid #365676;text-align:left}.answers button:hover{background:#1b3858}.log{max-height:220px;overflow:auto;background:#06101b;border:1px solid var(--line);border-radius:12px;padding:10px;font-size:13px}.log div{padding:4px 0;border-bottom:1px solid #122338}.log div:last-child{border-bottom:0}
+.shopGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.item{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid #19304a}.item:last-child{border-bottom:0}.rarity{font-weight:900}.r-common{color:#fff}.r-uncommon{color:#4ade80}.r-rare{color:#60a5fa}.r-epic{color:#c084fc}.r-legendary{color:#fb923c}.r-gold{color:#facc15}.r-divine{color:#67e8f9}.r-mythic{color:#f43f5e}.r-ultimate{color:#f9a8ff;text-shadow:0 0 8px #a855f7}.r-black{color:#e879f9;text-shadow:0 0 6px #8b5cf6}.equipmentRow{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.gearIcon{font-size:30px}.gearMeta{display:flex;justify-content:space-between;gap:8px;align-items:center}.modal{position:fixed;inset:0;background:rgba(0,0,0,.68);display:grid;place-items:center;padding:15px;z-index:30}.modalBox{width:min(560px,100%);background:#0d1828;border:1px solid var(--line);border-radius:18px;padding:18px}.toast{position:fixed;right:16px;bottom:16px;background:#112840;border:1px solid #3b6289;padding:11px 15px;border-radius:12px;display:none;z-index:40}.notice{padding:10px 12px;border-radius:12px;background:#122338;border:1px solid #27425e}.warning{border-color:#815c19;background:#2a2110}.bossArt{font-size:50px;width:76px;height:76px;border-radius:18px;background:#121f34;display:grid;place-items:center}.twoCol{display:grid;grid-template-columns:1.25fr .75fr;gap:12px}.miniList{display:grid;gap:8px}.miniList>div{padding:8px 10px;border-radius:10px;background:#0b1a2b;border:1px solid #1c3550}
+@media(max-width:950px){.grid4,.grid,.grid2,.shopGrid,.menu,.equipmentRow,.twoCol{grid-template-columns:1fr 1fr}.nav{grid-template-columns:repeat(4,1fr)}}
+@media(max-width:650px){.grid4,.grid,.grid2,.shopGrid,.menu,.equipmentRow,.twoCol,.answers{grid-template-columns:1fr}.nav{grid-template-columns:repeat(3,1fr)}.top{align-items:flex-start;flex-direction:column}}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<div id="modal" class="modal hidden"><div class="modalBox" id="modalBox"></div></div>
+<div id="toast" class="toast"></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+(()=>{
+const KEY='khtn_single_html_v3_cloud';
+/*
+  CLOUD SETUP
+  1) Create a Supabase project.
+  2) Put the Project URL and Publishable/Anon key below.
+  3) Run the companion SQL file: supabase_khtn.sql
+  Never put a Supabase service_role/secret key in this HTML.
+*/
+const SUPABASE_CONFIG={
+  url:'https://YOUR-PROJECT.supabase.co',
+  key:'YOUR_SUPABASE_PUBLISHABLE_OR_ANON_KEY'
+};
+const CLOUD_CONFIGURED=SUPABASE_CONFIG.url.startsWith('https://') && !SUPABASE_CONFIG.url.includes('YOUR-PROJECT') && SUPABASE_CONFIG.key && !SUPABASE_CONFIG.key.includes('YOUR_SUPABASE');
+const supa=CLOUD_CONFIGURED && window.supabase ? window.supabase.createClient(SUPABASE_CONFIG.url,SUPABASE_CONFIG.key,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}}):null;
+let cloudChannel=null,cloudSaveTimer=null,cloudSaving=false,cloudSaveQueued=false;
+let roomChannel=null,roomUiTimer=null,roomJoinInProgress=false;
+const DEVICE_KEY='khtn_device_id_v1';
+const deviceId=localStorage.getItem(DEVICE_KEY)||('dev_'+Math.random().toString(36).slice(2)+'_'+Date.now().toString(36));
+localStorage.setItem(DEVICE_KEY,deviceId);
+const DIFFICULTIES=[
+{id:'easy',name:'Khởi đầu',color:'r-common',icon:'🌱',desc:'Câu hỏi nền tảng, phép toán trực tiếp.',unlock:1,hpMul:1,atkMul:1,defMul:1},
+{id:'normal',name:'Tiến bước',color:'r-uncommon',icon:'🧩',desc:'Bẫy phương án, cần suy luận 2 bước.',unlock:10,hpMul:1.35,atkMul:1.15,defMul:1.15},
+{id:'hard',name:'Chuyên sâu',color:'r-rare',icon:'🧠',desc:'Bài toán nhiều bước, phản ứng hóa học phức tạp hơn.',unlock:25,hpMul:1.8,atkMul:1.35,defMul:1.3},
+{id:'expert',name:'Thách thức',color:'r-epic',icon:'⚡',desc:'Câu đố đánh lừa cao, yêu cầu kiểm tra kỹ điều kiện.',unlock:45,hpMul:2.35,atkMul:1.6,defMul:1.5}
+];
+const TOPICS={Toán:['Phương trình bậc hai','Định lý Viète','Delta và nghiệm','Biện luận nghiệm'],Hóa:['Cân bằng phương trình hóa học','Bảo toàn nguyên tố','Phản ứng axit–bazơ','Oxi hóa–khử cơ bản']};
+const RARITIES=[
+{id:'common',name:'Phổ thông',short:'Trắng',className:'r-common',mult:1.00,shopEquip:true,black:false,drop:50},
+{id:'uncommon',name:'Hiếm',short:'Lục',className:'r-uncommon',mult:1.35,shopEquip:true,black:true,drop:35},
+{id:'rare',name:'Cực Hiếm',short:'Lam',className:'r-rare',mult:1.8,shopEquip:true,black:false,drop:15},
+{id:'epic',name:'Sử thi',short:'Tím',className:'r-epic',mult:2.4,shopEquip:true,black:false,drop:5},
+{id:'legendary',name:'Huyền thoại',short:'Cam',className:'r-legendary',mult:3.2,shopEquip:false,black:true,drop:3.0},
+{id:'gold',name:'Hoàng Kim',short:'Vàng',className:'r-gold',mult:4.2,shopEquip:false,black:true,drop:2.0},
+{id:'divine',name:'Thần',short:'Xanh ánh kim',className:'r-divine',mult:5.5,shopEquip:false,black:true,drop:1.4},
+{id:'mythic',name:'Thần thoại',short:'Đỏ',className:'r-mythic',mult:7.0,shopEquip:false,black:true,drop:1.0},
+{id:'ultimate',name:'Tối thượng',short:'Cầu vồng',className:'r-ultimate',mult:9.5,shopEquip:false,black:true,drop:.5},
+{id:'black',name:'Black Holes',short:'Đen-Tím',className:'r-black',mult:14,shopEquip:false,black:true,drop:.01}
+];
+const EQUIP_TYPES=[
+{id:'weapon',name:'Vũ khí',icon:'⚔️',bias:{atk:1,hp:0,def:0,crit:.01,critDmg:0}},
+{id:'helmet',name:'Mũ',icon:'🪖',bias:{atk:.15,hp:.8,def:.6,crit:.002,critDmg:.03}},
+{id:'armor',name:'Áo',icon:'🛡️',bias:{atk:.12,hp:1,def:.9,crit:.001,critDmg:.02}},
+{id:'pants',name:'Quần',icon:'👖',bias:{atk:.1,hp:.8,def:.8,crit:.001,critDmg:.01}},
+{id:'boots',name:'Giày',icon:'🥾',bias:{atk:.1,hp:.6,def:.55,crit:.003,critDmg:.03}},
+{id:'talent',name:'Thiên phú',icon:'✨',bias:{atk:.2,hp:.9,def:.5,crit:.004,critDmg:.05}},
+{id:'jewelry',name:'Trang sức',icon:'💍',bias:{atk:.25,hp:.5,def:.25,crit:.005,critDmg:.06}}
+];
+const QUESTIONS={
+Toán:[
+{q:'Phương trình x² − 5x + 6 = 0 có hai nghiệm là?',a:['1 và 6','2 và 3','−2 và −3','0 và 6'],c:1},
+{q:'Phương trình 2x² − 7x + 3 = 0 có tổng hai nghiệm bằng?',a:['−7/2','3/2','7/2','−3/2'],c:2},
+{q:'Phương trình x² + 4x + 5 = 0 có số nghiệm thực là?',a:['0','1','2','4'],c:0},
+{q:'Với ax²+bx+c=0, a≠0, nếu Δ=0 thì phương trình có?',a:['Vô nghiệm','Một nghiệm kép','Hai nghiệm phân biệt','Hai nghiệm đối nhau'],c:1},
+{q:'Phương trình x²−4x+4=0 có nghiệm x bằng?',a:['−2','0','2','4'],c:2},
+{q:'Nếu hai nghiệm là x₁=2, x₂=−3 thì tổng hai nghiệm bằng?',a:['−6','−1','1','6'],c:1},
+{q:'Phương trình 3x²−12x=0 có nghiệm là?',a:['0 và 4','3 và 4','−4 và 0','1 và 4'],c:0},
+{q:'Với x²+bx+c=0 có hai nghiệm dương, điều kiện cần là?',a:['b>0,c<0','b<0,c>0','b>0,c>0','b<0,c<0'],c:1}
+],
+Hóa:[
+{q:'Cân bằng: ?H₂ + O₂ → ?H₂O. Bộ hệ số tối giản là?',a:['1,1,1','2,1,2','2,2,1','1,2,2'],c:1},
+{q:'Cân bằng: Fe + O₂ → Fe₂O₃. Hệ số tối giản là?',a:['2,3,1','4,3,2','3,2,1','4,2,3'],c:1},
+{q:'Cân bằng: Al + HCl → AlCl₃ + H₂. Hệ số tối giản là?',a:['1,3,1,1','2,6,2,3','2,3,2,3','1,6,1,3'],c:1},
+{q:'Cân bằng: NaOH + H₂SO₄ → Na₂SO₄ + H₂O. Hệ số tối giản là?',a:['1,1,1,1','2,1,1,2','1,2,1,2','2,2,1,1'],c:1},
+{q:'Cân bằng: CaCO₃ → CaO + CO₂. Hệ số tối giản là?',a:['2,1,1','1,1,1','1,2,1','1,1,2'],c:1},
+{q:'Cân bằng: CH₄ + O₂ → CO₂ + H₂O. Hệ số tối giản là?',a:['1,1,1,1','1,2,1,2','2,1,2,1','2,4,2,4'],c:1},
+{q:'Cân bằng: Mg + HCl → MgCl₂ + H₂. Hệ số tối giản là?',a:['1,1,1,1','1,2,1,1','2,1,2,1','2,2,1,1'],c:1},
+{q:'Cân bằng: N₂ + H₂ → NH₃. Hệ số tối giản là?',a:['1,1,1','1,2,2','1,3,2','2,3,2'],c:2}
+]};
+const WORLD_BOSSES=[
+{name:'Tân Tinh Toán',tier:1,hp:10000,icon:'🌑',desc:'Khởi đầu – suy luận vừa phải'},
+{name:'Hóa Nguyên Sơ',tier:2,hp:100000,icon:'🧪',desc:'Cân bằng phản ứng nâng cao'},
+{name:'Quái Vật Viète',tier:3,hp:1000000,icon:'📐',desc:'Bẫy nghiệm và điều kiện'},
+{name:'Lò Phản Ứng Khổng Lồ',tier:4,hp:10000000,icon:'⚗️',desc:'Hóa học nhiều tầng'},
+{name:'Hắc Delta',tier:5,hp:100000000,icon:'🕳️',desc:'Suy luận hỗn hợp'},
+{name:'Pháo Đài Bảo Toàn',tier:6,hp:1000000000,icon:'🏰',desc:'Bảo toàn nguyên tố & đại số'},
+{name:'Thiên Thể Phương Trình',tier:7,hp:10000000000,icon:'🌌',desc:'Đa bước tốc độ cao'},
+{name:'Đại Hóa Thần',tier:8,hp:100000000000,icon:'👁️',desc:'Câu hỏi đánh lừa mạnh'},
+{name:'Kẻ Ăn Mòn Hằng Số',tier:9,hp:1000000000000,icon:'☄️',desc:'Mốc tối thượng – cơ hội Black Holes 0,01%'},
+{name:'Kẻ Thách Thức Hư Không',tier:10,hp:10000000000000,icon:'🌀',desc:'Cực hạn của Boss Thế giới'}
+];
+const SOLO_DROPS={common:50,uncommon:28,rare:12,epic:7,legendary:2,gold:.7,divine:.25,mythic:.04,ultimate:.01};
+let state={user:null,screen:'home',playType:null,mode:null,subject:null,diff:null,stage:null,enemyIndex:0,playerHP:100,enemyHP:0,enemyMax:0,boss:false,logs:[],question:null,room:null,worldBoss:null};
+function defaultUser(username){return {username,name:'Kẻ thách thức',renameUsed:false,level:1,xp:0,coin:500,gem:50,inv:{revive:2},equipment:{},pets:[],pet:null,progress:{Toán:{easy:0,normal:0,hard:0,expert:0},Hóa:{easy:0,normal:0,hard:0,expert:0}},world:{monthKey:getMonthKey(),attempts:{},damageHits:{},claimedHits:{},clears:{}},starterGift:false,createdAt:Date.now()}}
+function db(){try{return JSON.parse(localStorage.getItem(KEY))||{users:{}}}catch(e){return {users:{}}}}
+function saveDB(d){localStorage.setItem(KEY,JSON.stringify(d))}
+function u(){const d=db();return state.user?d.users[state.user]:null}
+function cloudSanitize(x){const y=JSON.parse(JSON.stringify(x||{}));delete y.password;return y}
+function cacheCurrentUser(x){const d=db();d.users[state.user]=cloudSanitize(x);saveDB(d)}
+function queueCloudSave(){if(!supa||!state.user)return;clearTimeout(cloudSaveTimer);cloudSaveTimer=setTimeout(()=>saveCloudNow(),350)}
+async function saveCloudNow(){
+  if(!supa||!state.user)return;
+  const x=u();if(!x)return;
+  if(cloudSaving){cloudSaveQueued=true;return}
+  cloudSaving=true;
+  const payload={id:state.user,username:x.username||'',display_name:x.name||'Kẻ thách thức',game_state:cloudSanitize(x),updated_at:new Date().toISOString()};
+  const {error}=await supa.from('profiles').upsert(payload,{onConflict:'id'});
+  cloudSaving=false;
+  if(error){cloudSaveQueued=false;toast('⚠️ Chưa đồng bộ Cloud: '+error.message);return}
+  if(cloudSaveQueued){cloudSaveQueued=false;saveCloudNow()}
+}
+function patchUser(p){const d=db();if(!state.user||!d.users[state.user])return;d.users[state.user]={...d.users[state.user],...p};saveDB(d);queueCloudSave()}
+function getMonthKey(){const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')}
+function resetWorldIfNeeded(){const x=u();if(!x)return;if(x.world?.monthKey!==getMonthKey()){x.world={monthKey:getMonthKey(),attempts:{},damageHits:{},claimedHits:{},clears:{}};patchUser({world:x.world})}}
+async function hydrateFromCloud(authUser){
+  state.user=authUser.id;
+  let profile=null;
+  if(supa){
+    const {data,error}=await supa.from('profiles').select('id,username,display_name,game_state,updated_at').eq('id',authUser.id).maybeSingle();
+    if(error){console.warn('Cloud profile read error',error);}
+    profile=data||null;
+  }
+  if(profile?.game_state){
+    const cloudState={...profile.game_state,username:profile.username||authUser.email||profile.game_state.username||'player'};
+    const d=db();d.users[state.user]=cloudSanitize(cloudState);saveDB(d);
+  }else{
+    const existing=db().users[state.user];
+    const fresh=existing||defaultUser(authUser.email||'player');
+    fresh.username=authUser.email||fresh.username||'player';
+    cacheCurrentUser(fresh);
+    await saveCloudNow();
+  }
+  resetWorldIfNeeded();
+  subscribeCloudProfile();
+  const invite=parseInviteRoom();
+  if(invite && !state.room){
+    state.playType='network';
+    state.screen='networkLobby';
+    setTimeout(()=>joinNetworkRoom(),120);
+  }
+  render();
+}
+function subscribeCloudProfile(){
+  if(!supa||!state.user)return;
+  if(cloudChannel){try{supa.removeChannel(cloudChannel)}catch(e){}}
+  cloudChannel=supa.channel('khtn-profile-'+state.user).on('postgres_changes',{event:'UPDATE',schema:'public',table:'profiles',filter:'id=eq.'+state.user},payload=>{
+    if(!payload?.new?.game_state||payload.new.id!==state.user)return;
+    const d=db();
+    d.users[state.user]=cloudSanitize(payload.new.game_state);
+    d.users[state.user].username=payload.new.username||d.users[state.user].username;
+    saveDB(d);
+    if(state.user){toast('☁️ Dữ liệu đã được đồng bộ từ Cloud');render();}
+  }).subscribe();
+}
+async function bootCloud(){
+  if(!supa){render();return}
+  const {data,error}=await supa.auth.getSession();
+  if(error){console.warn('Auth session error',error);render();return}
+  if(data?.session?.user){await hydrateFromCloud(data.session.user)} else render();
+  supa.auth.onAuthStateChange(async (_event,session)=>{
+    if(session?.user && state.user!==session.user.id){await hydrateFromCloud(session.user)}
+    if(!session){state={...state,user:null,screen:'home'};render()}
+  });
+}
+function esc(s){return String(s).replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]))}
+function toast(msg){const e=document.getElementById('toast');e.textContent=msg;e.style.display='block';clearTimeout(window.__toast);window.__toast=setTimeout(()=>e.style.display='none',2200)}
+function modal(html){document.getElementById('modalBox').innerHTML=html;document.getElementById('modal').classList.remove('hidden')}
+function closeModal(){document.getElementById('modal').classList.add('hidden')};window.closeModal=closeModal;
+function chooseScreen(s){if(state.room&&s!=='networkLobby')leaveNetworkRoom();state.screen=s;state.playType=null;state.mode=null;state.subject=null;state.diff=null;state.stage=null;state.room=null;state.worldBoss=null;render()};
+function choosePlayType(t){state.playType=t;state.screen='modeSelect';render()};window.choosePlayType=choosePlayType;window.chooseScreen=chooseScreen;
+async function login(){
+  const a=document.getElementById('loginUser')?.value.trim(),p=document.getElementById('loginPw')?.value;
+  if(!a||!p)return toast('Nhập tài khoản và mật khẩu');
+  if(!supa)return toast('Cloud chưa cấu hình. Hãy điền SUPABASE_CONFIG ở đầu file.');
+  const {data,error}=await supa.auth.signInWithPassword({email:a,password:p});
+  if(error)return toast('Đăng nhập thất bại: '+error.message);
+  if(data?.user) await hydrateFromCloud(data.user);
+}
+window.login=login;
+async function register(){
+  if(state.user)return toast('Tài khoản hiện tại đã đăng nhập. Hãy đăng xuất trước khi tạo tài khoản mới.');
+  const a=document.getElementById('regUser')?.value.trim(),p=document.getElementById('regPw')?.value;
+  if(!a||!p)return toast('Nhập email tài khoản và mật khẩu');
+  if(!a.includes('@'))return toast('Tài khoản Cloud sử dụng Email để có thể đồng bộ trên nhiều thiết bị.');
+  if(p.length<6)return toast('Mật khẩu tối thiểu 6 ký tự');
+  if(!supa)return toast('Cloud chưa cấu hình. Hãy điền SUPABASE_CONFIG ở đầu file.');
+  const {data,error}=await supa.auth.signUp({email:a,password:p});
+  if(error)return toast('Không thể tạo tài khoản: '+error.message);
+  if(data?.session?.user){await hydrateFromCloud(data.session.user);toast('☁️ Tạo tài khoản và đồng bộ Cloud thành công');}
+  else toast('✅ Tạo tài khoản thành công. Hãy xác minh Email nếu dự án yêu cầu, sau đó đăng nhập.');
+}
+window.register=register;
+async function logout(){
+  if(supa) await saveCloudNow();
+  await leaveNetworkRoom();
+  if(supa) await supa.auth.signOut();
+  state={...state,user:null,screen:'home'};render();
+}
+window.logout=logout;
+function rename(){const x=u();if(x.renameUsed)return toast('Bạn đã dùng quyền đổi tên');modal(`<h3>✏️ Đổi tên</h3><p class="muted">Mỗi tài khoản chỉ được đổi tên 1 lần.</p><div class="field"><label>Tên mới</label><input id="newName" maxlength="24" value="${esc(x.name)}"></div><div class="row"><button onclick="saveRename()">Lưu tên</button><button class="secondary" onclick="closeModal()">Hủy</button></div>`)}window.rename=rename;
+function saveRename(){const n=document.getElementById('newName').value.trim();if(!n)return toast('Tên không được trống');patchUser({name:n,renameUsed:true});closeModal();render();toast('Đã đổi tên')};window.saveRename=saveRename;
+function xpNeed(l){return 10+Math.floor((l-1)*5)+(l-1)*(l-1)}
+function addXP(a){const x=u();let xp=x.xp+a,l=x.level;while(l<300&&xp>=xpNeed(l)){xp-=xpNeed(l);l++;toast('🎉 Lên cấp '+l+'!')}patchUser({xp,level:l})}
+function levelStats(lvl){return {hp:100+(lvl-1)*50,atk:10+(lvl-1)*5,def:5+(lvl-1)*2.5,crit:.1+(lvl-1)*.01,critDmg:15+(lvl-1)} }
+function equippedStats(){const x=u(),base=levelStats(x.level);let s={...base};Object.values(x.equipment||{}).forEach(eq=>{if(!eq||!eq.stats)return;for(const k of ['hp','atk','def','crit','critDmg'])s[k]+=Number(eq.stats[k]||0)});const pet=PET_LIST.find(p=>p.id===x.pet);if(pet?.bonus)s={...s,hp:s.hp+(pet.bonus.hp||0),atk:s.atk+(pet.bonus.atk||0),def:s.def+(pet.bonus.def||0),crit:s.crit+(pet.bonus.crit||0),critDmg:s.critDmg+(pet.bonus.critDmg||0)};return s}
+function starterGift(){const x=u();if(x.starterGift)return;const r=randomRarity(['common','uncommon','rare','epic','legendary','gold','divine','mythic']);giveEquipment(r,false);const y=u();y.starterGift=true;patchUser({starterGift:true})}
+function randomRarity(allowed){const weights=RARITIES.filter(r=>allowed.includes(r.id));const total=weights.reduce((s,r)=>s+r.drop,0);let n=Math.random()*total;for(const r of weights){n-=r.drop;if(n<=0)return r}return weights[0]}
+function rarityById(id){return RARITIES.find(r=>r.id===id)||RARITIES[0]}
+function itemId(){return 'eq_'+Date.now().toString(36)+'_'+Math.random().toString(36).slice(2,7)}
+function equipmentName(type,rarity,level){return `${rarity.name} ${EQUIP_TYPES.find(t=>t.id===type).name} Lv.${level}`}
+function makeEquipment(rarityId,type,level){const r=rarityById(rarityId),t=EQUIP_TYPES.find(a=>a.id===type);const scale=level;const mult=r.mult*(0.85+Math.random()*.3);const stats={hp:Math.round((t.bias.hp*10+5)*scale*mult),atk:Math.round((t.bias.atk*4+1)*scale*mult),def:Math.round((t.bias.def*2+1)*scale*mult*10)/10,crit:Math.round(t.bias.crit*scale*mult*1000)/1000,critDmg:Math.round((t.bias.critDmg*100)*scale*mult)/100};return {id:itemId(),type,rarity:r.id,level,name:equipmentName(type,r,level),stats}}
+function giveEquipment(rarityId,worldOnly){const x=u();let types=EQUIP_TYPES.filter(t=>worldOnly?['talent','jewelry'].includes(t.id):!['talent','jewelry'].includes(t.id));const type=types[Math.floor(Math.random()*types.length)].id;const level=Math.min(10,Math.max(1,Math.ceil((x.level||1)/30)));const item=makeEquipment(rarityId,type,level);x.inv[item.id]=item;patchUser({inv:x.inv});return item}
+const PET_LIST=[
+{id:'owl',name:'Cú Thông Thái',icon:'🦉',desc:'Tăng XP.',bonus:{hp:10,crit:.01}},
+{id:'fox',name:'Cáo Hóa Học',icon:'🦊',desc:'Tăng ATK.',bonus:{atk:3}},
+{id:'turtle',name:'Rùa Bền Bỉ',icon:'🐢',desc:'Tăng HP và DEF.',bonus:{hp:30,def:2}},
+{id:'dragon',name:'Long Định Luật',icon:'🐉',desc:'Tăng Crit Damage.',bonus:{critDmg:6}}
+];
+function givePet(){const x=u(),available=PET_LIST.filter(p=>!x.pets.includes(p.id));if(!available.length)return null;const p=available[Math.floor(Math.random()*available.length)];x.pets.push(p.id);patchUser({pets:x.pets});return p}
+function rollSoloDrop(diff,stage,enemyIndex,isBoss){const x=u();let r;const step=Math.min(10,Math.ceil(stage/8));let allowed=['common'];if(step>=2)allowed.push('uncommon');if(step>=3)allowed.push('rare');if(step>=5)allowed.push('epic');if(step>=7)allowed.push('legendary');if(step>=9)allowed.push('gold');if(stage>=77)allowed.push('divine');if(stage>=80)allowed.push('mythic');if(diff==='expert'&&stage>=79)allowed.push('ultimate');r=randomRarity(allowed);const chance=SOLO_DROPS[r.id]||.01; // table shown for reference; rarity pool is stage gated
+let roll=Math.random()*100; // use a rare-protection interpretation
+if(roll>Math.min(98,50+stage*.5))r=randomRarity(['common','uncommon']);
+const item=giveEquipment(r.id,false);return item}
+function enemyStats(diff,stage,idx,isBoss){const d=DIFFICULTIES.find(x=>x.id===diff);const baseHP=[10,20,30,40][idx]||50;const stageScale=1+(stage-1)*.12;let hp=baseHP*d.hpMul*stageScale;if(isBoss)hp=50*d.hpMul*(1+(stage-1)*.16);const atkBase=isBoss?5:1+idx*.7;const atk=atkBase*d.atkMul*(1+(stage-1)*.11);const def=(isBoss?stage*1.8:stage*.65)*d.defMul;return {hp:Math.round(hp),atk:Math.round(atk*10)/10,def:Math.round(def*10)/10,hit:hitChance(stage)}}
+function hitChance(stage){if(stage>=10)return 1;if(stage>=5)return .5+(stage-5)*.1;return .0025+(stage-1)*(0.5-0.0025)/4}
+function stageLabel(stage){return `Màn ${stage}/80`}
+function difficultyView(){const x=u(),isToan=state.subject==='Toán';return `<div class="card"><div class="sectionTitle"><h2>${isToan?'📐':'⚗️'} ${esc(state.subject)} – Chọn độ khó</h2><button class="secondary" onclick="chooseScreen('expedition')">← Phòng ải</button></div><p class="muted">Mỗi độ khó có 80 màn. Mỗi màn gồm 3 quái + 1 boss. HP, ATK, DEF và độ khó câu hỏi tăng dần.</p><div class="grid2">${DIFFICULTIES.map(d=>{const prog=x.progress[state.subject][d.id];const locked=x.level<d.unlock;return `<div class="diffCard ${locked?'locked':''}" onclick="${locked?'toast(\'Cần Level '+d.unlock+' để mở\')':'selectDifficulty(\''+d.id+'\')'}"><div class="sectionTitle"><h3 class="${d.color}">${d.icon} ${esc(d.name)}</h3><span class="tag">Mở ở Lv.${d.unlock}</span></div><p class="small muted">${esc(d.desc)}</p><div class="progress"><div style="width:${prog/80*100}%"></div></div><p class="small">Tiến độ: <b>${prog}/80</b></p></div>`}).join('')}</div></div>`}
+function selectDifficulty(id){const x=u();if(x.level<(DIFFICULTIES.find(d=>d.id===id)?.unlock||1))return toast('Chưa mở độ khó');state.diff=id;state.stage=(x.progress[state.subject][id]||0)+1;state.enemyIndex=0;state.mode='expedition';state.screen='battle';startEncounter();render()};window.selectDifficulty=selectDifficulty;
+function modeSelectView(){const net=state.playType==='network';return `<div class="card"><div class="sectionTitle"><h2>${net?'🌐 Chơi mạng':'🎯 Chơi đơn'} – Chọn chế độ</h2><button class="secondary" onclick="chooseScreen('home')">← Trang chủ</button></div><p class="muted">Chọn hoạt động bạn muốn tham gia.</p><div class="grid2"><div class="bossCard" onclick="${net?'openNetworkLobby(\'expedition\')':'chooseScreen(\'expedition\')'}"><h2>🗺️ Ải viễn chinh</h2><p class="small muted">${net?'Tạo/tham gia phòng để cùng vượt màn.':'Chọn phòng ải Toán hoặc Hóa, sau đó chọn độ khó.'}</p><button>${net?'Tạo / vào phòng':'Chọn Ải'}</button></div><div class="bossCard" onclick="${net?'openNetworkLobby(\'world\')':'chooseScreen(\'world\')'}"><h2>🌍 Boss Thế giới</h2><p class="small muted">${net?'Tạo/tham gia phòng để cùng gây sát thương Boss.':'10 Boss, làm mới hàng tháng và giới hạn 10 lượt mỗi Boss.'}</p><button>${net?'Tạo / vào phòng':'Chọn Boss'}</button></div></div></div>`}
+function publicPlayerSnapshot(){const x=u(),s=equippedStats();return {userId:state.user,deviceId,name:x?.name||'Kẻ thách thức',level:x?.level||1,xp:x?.xp||0,pet:x?.pet||null,petName:PET_LIST.find(p=>p.id===x?.pet)?.name||'Không có',hp:Math.round(s.hp),atk:Math.round(s.atk),def:Math.round(s.def*10)/10,crit:s.crit,screen:state.screen,activity:state.screen==='battle'?`Ải ${state.subject||''} • Màn ${state.stage||0}`:state.screen==='worldBattle'?'Đang đánh Boss Thế giới':state.screen==='networkLobby'?'Đang chờ trong phòng':'Đang ở sảnh'} }
+function roomLink(code){const clean=location.href.split('#')[0];return clean+'#room='+encodeURIComponent(code)}
+function parseInviteRoom(){const m=location.hash.match(/(?:^|#)room=([^&]+)/);return m?decodeURIComponent(m[1]).toUpperCase():''}
+function roomRoster(){if(!roomChannel)return [];const stateMap=roomChannel.presenceState();const out=[];for(const arr of Object.values(stateMap||{})){for(const item of (arr||[])){if(item)out.push(item)}}const byDevice=new Map();out.forEach(p=>byDevice.set(p.deviceId,p));return [...byDevice.values()]}
+function renderRoomRoster(){if(!state.room)return '';const players=roomRoster();state.room.players=players.map(p=>p.name);return players.length?`<div class="grid2" style="margin-top:12px">${players.map(p=>`<div class="miniList"><div><b>${esc(p.name)}</b> ${p.userId===state.user?'🟢 Bạn':''}<br><span class="small muted">Lv.${p.level} • HP ${fmt(p.hp)} • ATK ${p.atk} • DEF ${p.def}</span><br><span class="small">🐾 ${esc(p.petName)} · ${esc(p.activity)}</span></div></div>`).join('')}</div>`:'<div class="notice small" style="margin-top:12px">Chưa có người chơi khác. Chia sẻ mã hoặc link mời cho bạn bè.</div>'}
+function scheduleRoomUi(){clearTimeout(roomUiTimer);roomUiTimer=setTimeout(()=>{if(state.screen==='networkLobby')render();},120)}
+async function connectNetworkRoom(code,isHost=false,mode=null){
+  if(!supa)return toast('Cloud chưa cấu hình nên chưa thể đồng bộ phòng mạng.');
+  if(!state.user)return toast('Chưa đăng nhập Cloud.');
+  if(roomChannel){try{await roomChannel.unsubscribe()}catch(e){};try{supa.removeChannel(roomChannel)}catch(e){}}
+  state.room={code,host:!!isHost,players:[],connected:false};
+  roomChannel=supa.channel('khtn-room-'+code,{config:{presence:{key:state.user+'-'+deviceId},broadcast:{ack:true}}});
+  roomChannel.on('presence',{event:'sync'},()=>{state.room.players=roomRoster().map(p=>p.name);scheduleRoomUi()});
+  roomChannel.on('broadcast',{event:'room-meta'},({payload})=>{if(!payload)return;if(payload.hostId===state.user)return;state.room.hostId=payload.hostId;state.room.hostName=payload.hostName;state.room.mode=payload.mode||state.room.mode;state.mode=payload.mode||state.mode;scheduleRoomUi()});
+  roomChannel.on('broadcast',{event:'room-start'},({payload})=>{if(!payload)return;state.room.started=true;state.room.mode=payload.mode;state.mode=payload.mode;state.playType='network';state.screen=payload.mode==='world'?'world':'expedition';render();toast('🎮 Chủ phòng đã bắt đầu trận.')});
+  roomChannel.on('broadcast',{event:'player-sync'},({payload})=>{if(payload?.userId===state.user)return;scheduleRoomUi()});
+  return new Promise(resolve=>{
+    roomChannel.subscribe(async status=>{
+      if(status==='SUBSCRIBED'){
+        state.room.connected=true;state.room.mode=mode||state.room.mode;state.mode=mode||state.mode||'expedition';
+        await roomChannel.track(publicPlayerSnapshot());
+        if(isHost){await roomChannel.send({type:'broadcast',event:'room-meta',payload:{hostId:state.user,hostName:u().name,mode:state.mode}})}
+        const invite=parseInviteRoom(); if(invite!==code){history.replaceState(null,'',location.pathname+location.search+'#room='+encodeURIComponent(code));}
+        scheduleRoomUi();resolve(true);
+      }
+    });
+  });
+}
+async function openNetworkLobby(mode){state.mode=mode;state.screen='networkLobby';state.room=null;render();}
+window.openNetworkLobby=openNetworkLobby;
+function networkLobbyView(){
+  const r=state.room;
+  return `<div class="card"><div class="sectionTitle"><h2>👥 Phòng ${state.mode==='world'?'Boss Thế giới':'Ải viễn chinh'}</h2><button class="secondary" onclick="leaveNetworkRoom();chooseScreen('home')">Thoát</button></div>
+  <p class="muted">Phòng mạng dùng cùng Cloud/Reatime trong chính file HTML này. Người chơi không cần tải thêm file: đăng nhập tài khoản rồi nhập mã phòng hoặc mở link mời.</p>
+  <div class="notice small">☁️ Dữ liệu nhân vật riêng của từng tài khoản vẫn lưu trên Cloud. Trong phòng, game chỉ đồng bộ thông tin cần cho trận: tên, cấp, chỉ số chiến đấu, thú cưng, trạng thái và chế độ.</div>
+  <div class="row" style="margin-top:12px"><button onclick="createNetworkRoom()">＋ Tạo phòng</button><input class="roomInput" id="roomCodeJoin" value="${esc(parseInviteRoom())}" placeholder="Mã phòng / link mời" style="max-width:300px"><button class="secondary" onclick="joinNetworkRoom()">Tham gia</button></div>
+  ${r?`<div class="notice" style="margin-top:12px"><b>🔑 Mã phòng: ${esc(r.code)}</b><br><span class="small">${r.connected?'🟢 Đã kết nối Cloud':'🟡 Đang kết nối…'} ${r.host?' • Bạn là chủ phòng':''}</span><div class="row" style="margin-top:9px"><button class="secondary" onclick="copyRoomLink()">🔗 Sao chép link mời</button><button class="secondary" onclick="copyRoomCode()">📋 Sao chép mã</button>${r.host?`<button class="good" onclick="startNetworkMode()">▶ Bắt đầu</button>`:''}<button class="danger" onclick="leaveNetworkRoom();render()">Rời phòng</button></div></div>${renderRoomRoster()}`:''}</div>`
+}
+async function createNetworkRoom(){if(!supa)return toast('Cloud chưa cấu hình.');const code=Math.random().toString(36).slice(2,8).toUpperCase();await connectNetworkRoom(code,true,state.mode);render();toast('☁️ Đã tạo phòng '+code)}window.createNetworkRoom=createNetworkRoom;
+async function joinNetworkRoom(){let code=document.getElementById('roomCodeJoin')?.value.trim()||'';if(code.includes('#room='))code=parseInviteRoom();code=code.replace(/[^A-Za-z0-9]/g,'').toUpperCase();if(code.length<4)return toast('Nhập mã phòng hợp lệ');await connectNetworkRoom(code,false,null);render();toast('☁️ Đã vào phòng '+code)}window.joinNetworkRoom=joinNetworkRoom;
+async function copyRoomLink(){if(!state.room)return;navigator.clipboard?.writeText(roomLink(state.room.code));toast('🔗 Đã sao chép link mời');}window.copyRoomLink=copyRoomLink;
+async function copyRoomCode(){if(!state.room)return;navigator.clipboard?.writeText(state.room.code);toast('📋 Đã sao chép mã phòng');}window.copyRoomCode=copyRoomCode;
+async function leaveNetworkRoom(){if(roomChannel){try{await roomChannel.untrack()}catch(e){}try{await roomChannel.unsubscribe()}catch(e){}try{supa?.removeChannel(roomChannel)}catch(e){}roomChannel=null;}state.room=null;}window.leaveNetworkRoom=leaveNetworkRoom;
+async function startNetworkMode(){if(!state.room||!state.room.host)return toast('Chỉ chủ phòng mới được bắt đầu');state.room.started=true;state.playType='network';state.screen=state.mode==='world'?'world':'expedition';if(roomChannel)await roomChannel.send({type:'broadcast',event:'room-start',payload:{mode:state.mode}});await roomChannel?.track(publicPlayerSnapshot());render();toast('🎮 Phòng đã sẵn sàng')}window.startNetworkMode=startNetworkMode;
+function expeditionView(){return `<div class="card"><div class="sectionTitle"><h2>🗺️ Ải viễn chinh</h2><button class="secondary" onclick="chooseScreen('home')">← Trang chủ</button></div><p class="muted">Chọn phòng ải chính. Toán và Hóa có hệ thống chủ đề riêng.</p><div class="grid2"><div class="bossCard" onclick="selectSubject('Toán')"><div class="sectionTitle"><h2>📐 Phòng Ải Toán</h2><span class="tag">80 màn / độ khó</span></div><p class="small muted">${TOPICS.Toán.map(esc).join(' · ')}</p><button>Vào phòng</button></div><div class="bossCard" onclick="selectSubject('Hóa')"><div class="sectionTitle"><h2>⚗️ Phòng Ải Hóa</h2><span class="tag">80 màn / độ khó</span></div><p class="small muted">${TOPICS.Hóa.map(esc).join(' · ')}</p><button>Vào phòng</button></div></div></div>`}
+function selectSubject(s){state.subject=s;state.screen='difficulty';render()};window.selectSubject=selectSubject;
+function startEncounter(){const idx=state.enemyIndex;state.boss=idx===3;const es=enemyStats(state.diff,state.stage,idx,state.boss);state.enemyMax=es.hp;state.enemyHP=es.hp;const st=equippedStats();state.playerHP=Math.min(state.playerHP||st.hp,st.hp);state.question=pickQuestion(state.subject,state.stage);state.logs=[`⚔️ ${state.boss?'Boss':'Quái'} xuất hiện: ${es.hp} HP • ${es.def} DEF • ${Math.round(es.hit*10000)/100}% tỷ lệ trúng.`];}
+function pickQuestion(subject,stage){const arr=QUESTIONS[subject];let q=arr[(stage*3+state.enemyIndex)%arr.length];return {...q}}
+function calcPlayerDamage(q){const s=equippedStats();let raw=s.atk+(state.boss?Math.floor(state.stage*.6):0);const enemy=enemyStats(state.diff,state.stage,state.enemyIndex,state.boss);raw=Math.max(1,raw-enemy.def*.35);let crit=Math.random()<s.crit/100;if(crit)raw*=1+s.critDmg/100;return {dmg:Math.max(1,Math.round(raw)),crit}}
+function answer(i){if(state.mode!=='expedition')return;const q=state.question;if(i!==q.c){state.logs.unshift('❌ Sai đáp án. Kẻ địch phản công.');enemyAttack();nextTurn();render();return}const out=calcPlayerDamage(q);state.enemyHP-=out.dmg;state.logs.unshift(`✅ Chính xác! ${out.crit?'💥 CRIT ':''}Bạn gây ${out.dmg} sát thương.`);if(state.enemyHP<=0){finishEnemy();return}enemyAttack();nextTurn();render()};window.answer=answer;
+function enemyAttack(){const es=enemyStats(state.diff,state.stage,state.enemyIndex,state.boss);if(Math.random()>es.hit){state.logs.unshift('🛡️ Kẻ địch hụt đòn.');return}const st=equippedStats();const dmg=Math.max(1,Math.round(es.atk-st.def*.25));state.playerHP-=dmg;state.logs.unshift(`💢 ${state.boss?'Boss':'Quái'} gây ${dmg} sát thương.`);if(state.playerHP<=0)showRevive()}
+function nextTurn(){state.turn=(state.turn||0)+1;state.question=pickQuestion(state.subject,state.stage)}
+function finishEnemy(){const x=u();if(state.boss){const base=80+state.stage*20;x.coin+=base;addXP(20+state.stage);x.progress[state.subject][state.diff]=state.stage;patchUser({coin:x.coin,progress:x.progress});const drop=rollSoloDrop(state.diff,state.stage,3,true);let petMsg='';if(Math.random()<.12){const p=givePet();if(p)petMsg=`<p>🐾 Nhặt được thú cưng <b>${esc(p.name)}</b>!</p>`}const itemMsg=`<p>🎁 Rơi: <span class="${rarityById(drop.rarity).className}">${esc(drop.name)}</span>.</p>`;state.logs.unshift('👑 Hạ Boss màn '+state.stage+'!');modal(`<h3>🏆 Hoàn thành ${stageLabel(state.stage)}</h3><p>🪙 +${base} Vàng • XP +${20+state.stage}</p>${itemMsg}${petMsg}<div class="row"><button onclick="closeModal();continueExpedition()">Màn tiếp</button><button class="secondary" onclick="closeModal();chooseScreen('expedition')">Chọn phòng ải</button></div>`);return}const base=15+state.stage*4;x.coin+=base;addXP(8+state.stage/2);const drop=rollSoloDrop(state.diff,state.stage,state.enemyIndex,false);patchUser({coin:x.coin});state.logs.unshift(`💰 Quái bị hạ • +${base} Vàng`);state.enemyIndex++;if(state.enemyIndex<4){state.question=pickQuestion(state.subject,state.stage);startEncounter();render();} }
+function continueExpedition(){const x=u();const next=Math.min(80,(x.progress[state.subject][state.diff]||0)+1);state.stage=next;state.enemyIndex=0;state.playerHP=equippedStats().hp;startEncounter();render()};window.continueExpedition=continueExpedition;
+function showRevive(){const x=u();modal(`<h3>💀 Bạn đã gục</h3><p>Chọn cách hồi sinh. Xu hồi sinh: <b>${x.inv.revive||0}</b> • Kim cương: <b>${x.gem}</b></p><div class="row"><button class="gold" ${x.inv.revive?'':'disabled'} onclick="revive('item')">Xu hồi sinh</button><button ${x.gem>=20?'':'disabled'} onclick="revive('gem')">💎 20 Kim cương</button><button class="secondary" onclick="closeModal();chooseScreen('home')">Thoát</button></div>`)}
+function revive(method){const x=u();if(method==='item'){if((x.inv.revive||0)<1)return toast('Hết Xu hồi sinh');x.inv.revive--}else{if(x.gem<20)return toast('Không đủ Kim cương');x.gem-=20}patchUser({inv:x.inv,gem:x.gem});state.playerHP=Math.round(equippedStats().hp*.6);closeModal();render();toast('❤️ Hồi sinh thành công')};window.revive=revive;
+function worldView(){resetWorldIfNeeded();const x=u();return `<div class="card"><div class="sectionTitle"><h2>🌍 Boss Thế giới</h2><span class="tag">Tháng ${esc(getMonthKey())}</span></div><div class="notice warning small">Mỗi boss tối đa 10 lần đánh / tháng. Mỗi 10 đòn gây sát thương thành công nhận quà Kim cương. Hạ boss nhận thêm Kim cương và quà thiên phú.</div><div class="grid2" style="margin-top:12px">${WORLD_BOSSES.map(b=>{const tries=x.world.attempts[b.tier]||0;const clear=x.world.clears[b.tier]||0;return `<div class="worldBossCard"><div class="sectionTitle"><h3>${b.icon} ${esc(b.name)}</h3><span class="tag">Mốc ${b.tier}</span></div><p class="small muted">${esc(b.desc)}</p><p>HP: <b>${fmt(b.hp)}</b> • Dame cơ bản: <b>100</b> • Hit: <b>55%</b></p><p class="small">Lượt đã dùng: ${tries}/10 • Hạ gục: ${clear}</p><button ${tries>=10?'disabled':''} onclick="fightWorldBoss(${b.tier})">${tries>=10?'Hết lượt tháng':'Khiêu chiến'}</button></div>`}).join('')}</div></div>`}
+function fmt(n){return Number(n).toLocaleString('vi-VN')}
+function fightWorldBoss(tier){resetWorldIfNeeded();const x=u(),b=WORLD_BOSSES.find(z=>z.tier===tier),used=x.world.attempts[tier]||0;if(used>=10)return toast('Boss này đã đủ 10 lượt trong tháng');state.worldBoss={tier,hp:b.hp,max:b.hp,hitCount:0,localDamage:0,cleared:false};x.world.attempts[tier]=used+1;patchUser({world:x.world});state.subject=(tier%2?'Toán':'Hóa');state.mode='world';state.screen='worldBattle';state.question=pickWorldQuestion(tier);state.playerHP=equippedStats().hp;render()};window.fightWorldBoss=fightWorldBoss;
+function pickWorldQuestion(tier){const bank=[...QUESTIONS.Toán,...QUESTIONS.Hóa];return {...bank[(tier*2+state.worldBoss?.hitCount||0)%bank.length]}}
+function worldAnswer(i){const q=state.question;if(i!==q.c){state.logs.unshift('❌ Sai. Boss phản công.');worldAttack();state.question=pickWorldQuestion(state.worldBoss.tier);render();return}const x=u(),s=equippedStats();let damage=Math.max(1,Math.round(s.atk*(1+state.worldBoss.tier*.1)));let crit=Math.random()<s.crit/100;if(crit)damage=Math.round(damage*(1+s.critDmg/100));state.worldBoss.hp-=damage;state.worldBoss.hitCount++;state.worldBoss.localDamage+=damage;state.logs.unshift(`✅ Đúng! Gây ${damage}${crit?' CRIT':''}. Boss còn ${fmt(Math.max(0,state.worldBoss.hp))} HP.`);const t=state.worldBoss.tier;x.world.damageHits[t]=(x.world.damageHits[t]||0)+1;const hits=x.world.damageHits[t];const claimed=x.world.claimedHits[t]||0;if(Math.floor(hits/10)>claimed){const reward=t*5+5;x.gem+=reward;x.world.claimedHits[t]=claimed+1;state.logs.unshift(`💎 Quà mốc 10 hit: +${reward} Kim cương.`);patchUser({gem:x.gem,world:x.world});}worldAttack();if(state.worldBoss.hp<=0){worldClear();return}state.question=pickWorldQuestion(t);render()};window.worldAnswer=worldAnswer;
+function worldAttack(){const b=WORLD_BOSSES.find(z=>z.tier===state.worldBoss.tier);if(Math.random()>.55){state.logs.unshift('🛡️ Boss Thế giới đánh hụt.');return}const dmg=Math.max(1,Math.round(100*(1+state.worldBoss.tier*.12)-equippedStats().def*.2));state.playerHP-=dmg;state.logs.unshift(`💥 Boss gây ${dmg} sát thương.`);if(state.playerHP<=0){showWorldDefeat()}}
+function showWorldDefeat(){const x=u();const b=state.worldBoss;modal(`<h3>💀 Thất bại</h3><p>Đã hết HP. Lượt khiêu chiến này đã được tính. Bạn vẫn giữ các quà mốc 10 hit đã nhận.</p><p>Boss còn <b>${fmt(b.hp)}</b> HP.</p><button onclick="closeModal();chooseScreen('world')">Về Boss Thế giới</button>`)}
+function worldClear(){const x=u(),t=state.worldBoss.tier,b=WORLD_BOSSES.find(z=>z.tier===t),reward=t*25;x.gem+=reward;x.world.clears[t]=(x.world.clears[t]||0)+1;patchUser({gem:x.gem,world:x.world});let talent;if(t===9&&Math.random()<0.0001)talent=giveEquipment('black',true);else talent=giveEquipment(randomRarity(['legendary','gold','divine','mythic','ultimate']).id,true);addXP(50+t*10);modal(`<h3>👑 Hạ gục ${esc(b.name)}!</h3><p>💎 Hạ gục thưởng: <b>+${reward} Kim cương</b> • XP +${50+t*10}</p><p>🎁 Quà thiên phú: <span class="${rarityById(talent.rarity).className}">${esc(talent.name)}</span></p>${t===9?'<p class="small muted">Mốc 9 có cơ chế Black Holes 0,01% khi nhận quà đặc biệt.</p>':''}<button onclick="closeModal();chooseScreen('world')">Tiếp tục</button>`)}
+function expeditionBattleView(){const x=u(),st=equippedStats(),es=enemyStats(state.diff,state.stage,state.enemyIndex,state.boss);return `<div class="twoCol"><div class="card"><div class="sectionTitle"><div><span class="tag">${esc(state.subject)} • ${esc(DIFFICULTIES.find(d=>d.id===state.diff).name)}</span><h2>${stageLabel(state.stage)} • ${state.boss?'👑 Boss':'⚔️ Quái '+(state.enemyIndex+1)+'/3'}</h2></div><button class="secondary" onclick="chooseScreen('expedition')">Rời ải</button></div><div class="row"><div class="bossArt">${state.boss?'👹':['👾','🦂','🧟'][state.enemyIndex]||'👾'}</div><div style="flex:1"><b>${state.boss?'Boss cuối màn':'Quái vật'} • DEF ${es.def}</b><div class="hp" style="margin-top:8px"><div style="width:${Math.max(0,state.enemyHP/state.enemyMax*100)}%"></div></div><div class="small">${fmt(state.enemyHP)} / ${fmt(state.enemyMax)} HP</div></div></div><div class="notice small" style="margin-top:12px">Tỷ lệ Boss/Quái đánh trúng: <b>${Math.round(es.hit*10000)/100}%</b>. Màn 1 bắt đầu 0,25%, màn 5 = 50%, từ màn 10 = 100%.</div><div class="quest">${esc(state.question.q)}</div><div class="answers">${state.question.a.map((a,i)=>`<button onclick="answer(${i})"><b>${String.fromCharCode(65+i)}.</b> ${esc(a)}</button>`).join('')}</div><div style="margin-top:13px" class="log">${state.logs.slice(0,10).map(esc).map(s=>`<div>${s}</div>`).join('')}</div></div><div class="card"><h3>📊 Chỉ số</h3><div class="grid2"><div class="stat">HP<br><b>${fmt(st.hp)}</b></div><div class="stat">ATK<br><b>${st.atk}</b></div><div class="stat">DEF<br><b>${st.def}</b></div><div class="stat">Crit<br><b>${st.crit.toFixed(2)}%</b></div><div class="stat">Crit DMG<br><b>+${st.critDmg}%</b></div><div class="stat">Lv<br><b>${x.level}</b></div></div><hr style="border-color:#1c3046;border-width:1px 0 0;margin:16px 0"><p>❤️ HP hiện tại: <b>${Math.max(0,state.playerHP)}</b></p><div class="hp"><div style="width:${Math.max(0,state.playerHP/st.hp*100)}%"></div></div><p>🪙 Vàng: ${fmt(x.coin)}<br>💎 Kim cương: ${fmt(x.gem)}</p></div></div>`}
+function worldBattleView(){const b=WORLD_BOSSES.find(x=>x.tier===state.worldBoss.tier),s=equippedStats();return `<div class="twoCol"><div class="card"><div class="sectionTitle"><div><span class="tag">Mốc ${b.tier}</span><h2>${b.icon} ${esc(b.name)}</h2></div><button class="secondary" onclick="chooseScreen('world')">Rời Boss</button></div><div class="row"><div class="bossArt">${b.icon}</div><div style="flex:1"><b>Boss Thế giới</b><div class="hp" style="margin-top:8px"><div style="width:${Math.max(0,state.worldBoss.hp/state.worldBoss.max*100)}%"></div></div><div class="small">${fmt(Math.max(0,state.worldBoss.hp))} / ${fmt(state.worldBoss.max)} HP</div></div></div><p class="small muted">Dame cơ bản 100 • Tỷ lệ đánh trúng 55% • Lượt đánh của boss được tính trong lượt khiêu chiến tháng.</p><div class="quest">${esc(state.question.q)}</div><div class="answers">${state.question.a.map((a,i)=>`<button onclick="worldAnswer(${i})"><b>${String.fromCharCode(65+i)}.</b> ${esc(a)}</button>`).join('')}</div><div style="margin-top:13px" class="log">${state.logs.slice(0,10).map(esc).map(s=>`<div>${s}</div>`).join('')}</div></div><div class="card"><h3>🌍 Thống kê tháng</h3><div class="grid2"><div class="stat">Hit thành công<br><b>${state.worldBoss.hitCount}</b></div><div class="stat">Damage lượt này<br><b>${fmt(state.worldBoss.localDamage)}</b></div><div class="stat">HP<br><b>${fmt(s.hp)}</b></div><div class="stat">ATK<br><b>${s.atk}</b></div></div><p>❤️ ${Math.max(0,state.playerHP)} / ${fmt(s.hp)}</p><div class="hp"><div style="width:${Math.max(0,state.playerHP/s.hp*100)}%"></div></div><p>💎 Mỗi 10 hit thành công sẽ xét thưởng mốc.</p></div></div>`}
+const SHOP_TYPES=[{id:'equip',name:'🛡️ Cửa hàng trang bị',refresh:'30 phút',currency:'coin'},{id:'black',name:'🕶️ Chợ Đen',refresh:'Mỗi ngày',currency:'gem'},{id:'other',name:'🎁 Khác',refresh:'Theo tài khoản',currency:'coin'}];
+function shopState(){const x=u();if(!x.shop||x.shopKey!==getMonthKey()){}return x.shop||null}
+function weightedShopRarity(){const pool=[['common',50],['uncommon',35],['rare',15],['epic',5]];const total=pool.reduce((s,p)=>s+p[1],0);let n=Math.random()*total;for(const [id,w] of pool){n-=w;if(n<=0)return id}return 'common'}
+function blackRarity(){const pool=[['uncommon',35],['rare',30],['epic',20],['legendary',8],['gold',4],['divine',2],['mythic',.8],['ultimate',.19],['black',.01]];let n=Math.random()*100;for(const [id,w] of pool){n-=w;if(n<=0)return id}return 'uncommon'}
+function refreshShop(force=false){const x=u();const now=Date.now();const last=x.shop?.last||0;if(!force&&x.shop?.items&&now-last<30*60*1000)return;const items=[],seen={};for(let i=0;i<7;i++){let item,tries=0;do{const rarity=weightedShopRarity(),type=EQUIP_TYPES.slice(0,5)[Math.floor(Math.random()*5)].id;item=makeEquipment(rarity,type,Math.min(10,Math.max(1,Math.ceil(x.level/30))));tries++}while(seen[item.type+'|'+item.rarity]>=2&&tries<20);const key=item.type+'|'+item.rarity;seen[key]=(seen[key]||0)+1;items.push(item)}x.shop={items,last:now};patchUser({shop:x.shop})}
+function refreshBlack(){const x=u(),now=Date.now();if(x.blackShop?.items&&now-(x.blackShop.last||0)<24*60*60*1000)return;let items=[];for(let i=0;i<7;i++){const r=blackRarity(),type=EQUIP_TYPES.slice(0,5)[Math.floor(Math.random()*5)].id;items.push(makeEquipment(r,type,Math.min(10,Math.max(1,Math.ceil(x.level/30)))))}const high=items.filter(i=>['gold','divine','mythic','ultimate'].includes(i.rarity));while(high.length<3){const r=['gold','divine','mythic'][Math.floor(Math.random()*3)],type=EQUIP_TYPES[Math.floor(Math.random()*EQUIP_TYPES.length)].id;const z=makeEquipment(r,type,Math.min(10,Math.max(1,Math.ceil(x.level/30))));items[high.length]=z;high.push(z)}x.blackShop={items,last:now};patchUser({blackShop:x.blackShop})}
+function buyEquipment(item,shopType,index){const x=u();const cost=gearPrice(item,shopType);const cur=shopType==='black'?'gem':'coin';if(x[cur]<cost)return toast('Không đủ '+(cur==='gem'?'Kim cương':'Vàng'));modal(`<h3>🛒 Xác nhận mua</h3><p><span class="${rarityById(item.rarity).className}">${esc(item.name)}</span></p><p>Thông số: HP +${item.stats.hp}, ATK +${item.stats.atk}, DEF +${item.stats.def}, Crit +${item.stats.crit}%, Crit DMG +${item.stats.critDmg}%</p><p>Giá niêm yết: <b>${fmt(cost)} ${cur==='gem'?'💎':'🪙'}</b></p><div class="row"><button onclick="confirmGearPurchase('${shopType}',${index})">Mua</button><button class="secondary" onclick="closeModal()">Hủy</button></div>`)}window.buyEquipment=buyEquipment;
+function gearPrice(item,shopType){const base={common:200,uncommon:450,rare:900,epic:1600,legendary:2500,gold:4000,divine:6500,mythic:10000,ultimate:18000,black:99999}[item.rarity]||200;if(shopType==='black')return Math.round(base/10);return base}
+function confirmGearPurchase(shopType,index){const x=u(),pool=shopType==='black'?x.blackShop?.items:x.shop?.items,item=pool?.[index];if(!item)return closeModal();const cur=shopType==='black'?'gem':'coin',cost=gearPrice(item,shopType);if(x[cur]<cost){closeModal();return toast('Không đủ tiền')}x[cur]-=cost;x.inv[item.id]=item;patchUser({coin:x.coin,gem:x.gem,inv:x.inv});pool.splice(index,1);if(shopType==='black')x.blackShop.items=pool;else x.shop.items=pool;patchUser({shop:x.shop,blackShop:x.blackShop});closeModal();render();toast('Mua thành công!')};window.confirmGearPurchase=confirmGearPurchase;
+function shopView(){refreshShop();refreshBlack();const x=u();const s=x.shop.items,b=x.blackShop.items;const f=(items,type)=>`<div class="shopGrid">${items.map((it,i)=>`<div class="shopItem"><div class="gearIcon">${EQUIP_TYPES.find(t=>t.id===it.type).icon}</div><h3 class="${rarityById(it.rarity).className}">${esc(it.name)}</h3><div class="small muted">${esc(rarityById(it.rarity).name)} • ${esc(it.type)}</div><p class="small">HP +${it.stats.hp} · ATK +${it.stats.atk} · DEF +${it.stats.def}<br>Crit +${it.stats.crit}% · Crit DMG +${it.stats.critDmg}%</p><div class="gearMeta"><b>${fmt(gearPrice(it,type))} ${type==='black'?'💎':'🪙'}</b><button onclick='buyEquipment(${JSON.stringify(it)},"${type}",${i})'>Mua</button></div></div>`).join('')}</div>`;return `<div class="card"><div class="sectionTitle"><h2>🛒 Cửa hàng</h2><span class="tag">Giá niêm yết màu trắng</span></div><div class="notice small">Cửa hàng trang bị: 7 món, làm mới 30 phút. Có thể trùng tối đa 1 sản phẩm. Tỷ lệ xuất hiện theo thiết kế của bạn: Trắng 50% • Lục 35% • Lam 15% • Tím 5%.</div><h3>🛡️ Cửa hàng trang bị <span class="small muted">• làm mới 30 phút</span></h3>${f(s,'equip')}<hr style="border-color:#1c3046;border-width:1px 0 0;margin:18px 0"><h3>🕶️ Chợ Đen <span class="small muted">• làm mới mỗi ngày</span></h3><p class="small muted">Phân bổ giảm dần theo độ hiếm; hệ thống cưỡng chế tối thiểu 3 món từ Hoàng Kim trở lên.</p>${f(b,'black')}<hr style="border-color:#1c3046;border-width:1px 0 0;margin:18px 0"><h3>🎁 Khác</h3><div class="shopItem"><h3>🎁 Quà tân thủ</h3><p class="small muted">Mỗi tài khoản 1 lần. Nhận 1 trang bị với độ hiếm từ Phổ thông đến Thần thoại theo trọng số độ hiếm. Tài khoản này đã ${x.starterGift?'nhận':'chưa nhận'}.</p><button ${x.starterGift?'disabled':''} onclick="claimStarter()">${x.starterGift?'Đã nhận':'Nhận quà'}</button></div></div>`}
+function claimStarter(){starterGift();render();toast('🎁 Đã nhận quà tân thủ')};window.claimStarter=claimStarter;
+function bagView(){const x=u(),items=Object.values(x.inv||{}).filter(v=>v&&v.type);const grouped=EQUIP_TYPES.map(t=>({t,items:items.filter(i=>i.type===t.id)})).filter(g=>g.items.length);return `<div class="card"><div class="sectionTitle"><h2>🎒 Túi đồ & Trang bị</h2><span class="tag">7 vị trí trang bị</span></div><div class="grid2">${EQUIP_TYPES.map(t=>{const z=x.equipment?.[t.id];return `<div class="equipCard"><div class="gearMeta"><div><div class="gearIcon">${t.icon}</div><b>${t.name}</b></div><span class="small muted">${z?esc(z.name):'Chưa trang bị'}</span></div>${z?`<div class="small" style="margin-top:8px">HP +${z.stats.hp} · ATK +${z.stats.atk} · DEF +${z.stats.def}<br>Crit +${z.stats.crit}% · Crit DMG +${z.stats.critDmg}%</div>`:''}</div>`}).join('')}</div>${grouped.map(g=>`<div style="margin-top:16px"><h3>${g.t.icon} ${g.t.name}</h3>${g.items.map(it=>`<div class="item"><div><b class="${rarityById(it.rarity).className}">${esc(it.name)}</b><div class="small muted">${esc(rarityById(it.rarity).name)} • HP +${it.stats.hp} • ATK +${it.stats.atk} • DEF +${it.stats.def}</div></div><button class="secondary" onclick="equip('${it.id}')">${x.equipment?.[it.type]?.id===it.id?'Đang dùng':'Trang bị'}</button></div>`).join('')}</div>`).join('')}<p class="small muted" style="margin-top:16px">Thiên phú và Trang sức chỉ nhận từ quà thiên phú của Boss Thế giới. Trong cửa hàng chợ đen, chúng có thể xuất hiện theo pool hiếm.</p></div>`}
+function equip(id){const x=u(),it=x.inv[id];if(!it)return toast('Không tìm thấy trang bị');if(['talent','jewelry'].includes(it.type)&&!Object.values(x.inv).includes(it))return; x.equipment[it.type]=it;patchUser({equipment:x.equipment});render();toast('Đã trang bị '+it.name)};window.equip=equip;
+function forgeView(){return `<div class="card"><h2>⚒️ Tiệm rèn</h2><p class="muted">Dùng mảnh vỡ và mảnh vật phẩm để ghép đồ hoàn chỉnh.</p><div class="grid2"><div class="shopItem"><h3>⚔️ Kiếm Mảnh</h3><p>Mảnh sắt ×3 + Mảnh pha lê ×1</p><button onclick="forgeBasic()">Rèn</button></div><div class="shopItem"><h3>✨ Bùa chiến thuật</h3><p>Mảnh sắt ×5 + Mảnh pha lê ×3</p><button onclick="forgeBasic2()">Rèn</button></div></div></div>`}
+function forgeBasic(){const x=u();if((x.inv.iron||0)<3||(x.inv.crystal||0)<1)return toast('Thiếu nguyên liệu');x.inv.iron-=3;x.inv.crystal-=1;const it=makeEquipment('rare','weapon',Math.min(10,Math.ceil(x.level/30)));x.inv[it.id]=it;patchUser({inv:x.inv});render();toast('⚒️ Rèn thành công')};window.forgeBasic=forgeBasic;
+function forgeBasic2(){const x=u();if((x.inv.iron||0)<5||(x.inv.crystal||0)<3)return toast('Thiếu nguyên liệu');x.inv.iron-=5;x.inv.crystal-=3;const it=makeEquipment('epic','weapon',Math.min(10,Math.ceil(x.level/30)));x.inv[it.id]=it;patchUser({inv:x.inv});render();toast('⚒️ Rèn thành công')};window.forgeBasic2=forgeBasic2;
+function petsView(){const x=u();const cards=PET_LIST.map(p=>{const owned=x.pets.includes(p.id);return '<div class="petCard"><div class="row"><div class="gearIcon">'+p.icon+'</div><div><h3>'+esc(p.name)+'</h3><p class="small muted">'+esc(p.desc)+'</p></div></div><p class="small">'+(owned?'Đã sở hữu':'Chưa sở hữu')+(x.pet===p.id?' • ⭐ Đang trang bị':'')+'</p>'+(owned?'<button class="secondary" onclick="equipPet(\''+p.id+'\')">'+(x.pet===p.id?'Đang dùng':'Trang bị')+'</button>':'')+'</div>'}).join('');return '<div class="card"><h2>🐾 Thú cưng</h2><p class="muted">Mỗi người chỉ được trang bị duy nhất 1 thú cưng.</p><div class="grid2">'+cards+'</div></div>'}
+function equipPet(id){const x=u();if(!x.pets.includes(id))return toast('Chưa sở hữu');x.pet=id;patchUser({pet:id});render();toast('Đã trang bị thú cưng')};window.equipPet=equipPet;
+async function syncNow(){
+  if(!supa)return toast('Cloud chưa cấu hình');
+  if(!state.user)return toast('Chưa đăng nhập');
+  await saveCloudNow();
+  const auth=await supa.auth.getUser();
+  if(auth?.data?.user) await hydrateFromCloud(auth.data.user);
+  toast('☁️ Đã đồng bộ dữ liệu');
+}
+window.syncNow=syncNow;
+function cloudStatus(){return supa?'☁️ Cloud':'⚠️ Local'}
+function home(){const x=u(),s=equippedStats(),need=xpNeed(x.level);return `<div class="grid4"><div class="stat">Lv<br><b>${x.level}/300</b></div><div class="stat">HP<br><b>${fmt(s.hp)}</b></div><div class="stat">ATK<br><b>${s.atk}</b></div><div class="stat">DEF<br><b>${s.def}</b></div></div><div class="card" style="margin-top:12px"><div class="sectionTitle"><h2>🎮 Chọn chế độ chơi</h2><span class="tag">Toán & Hóa</span></div><div class="menu"><button onclick="choosePlayType('solo')"><strong>🎯 Chơi đơn</strong><span>Chọn Ải viễn chinh hoặc Boss Thế giới để chơi một mình.</span></button><button onclick="choosePlayType('network')"><strong>🌐 Chơi mạng</strong><span>Tạo/tham gia phòng; sau đó chọn Ải viễn chinh hoặc Boss Thế giới.</span></button><button onclick="chooseScreen('shop')"><strong>🛒 Cửa hàng</strong><span>Trang bị, Chợ Đen, quà tân thủ.</span></button><button onclick="chooseScreen('bag')"><strong>🎒 Túi đồ</strong><span>Trang bị 7 vị trí và xem chỉ số.</span></button><button onclick="chooseScreen('forge')"><strong>⚒️ Tiệm rèn</strong><span>Ghép mảnh vỡ thành đồ hoàn chỉnh.</span></button><button onclick="chooseScreen('pets')"><strong>🐾 Thú cưng</strong><span>Kho pet và 1 pet đang trang bị.</span></button></div></div><div class="card" style="margin-top:12px"><h3>📈 Tiến trình</h3><div class="grid2"><div><b>Toán</b>${DIFFICULTIES.map(d=>`<div class="small" style="margin:5px 0">${d.icon} ${d.name}: ${x.progress.Toán[d.id]}/80</div>`).join('')}</div><div><b>Hóa</b>${DIFFICULTIES.map(d=>`<div class="small" style="margin:5px 0">${d.icon} ${d.name}: ${x.progress.Hóa[d.id]}/80</div>`).join('')}</div></div></div>`}
+function header(){const x=u(),need=xpNeed(x.level);return `<div class="top"><div><div class="logo">🧪 Kẻ thách thức Khoa học Tự Nhiên</div><div class="sub">${esc(x.name)} · Level ${x.level} · Tiến trình 300 cấp</div></div><div class="row"><span class="tag">${cloudStatus()}</span><span class="tag">🪙 ${fmt(x.coin)}</span><span class="tag">💎 ${fmt(x.gem)}</span><button class="secondary" onclick="syncNow()">Đồng bộ</button><button class="secondary" onclick="logout()">Đăng xuất</button></div></div><div class="card"><div class="row" style="justify-content:space-between"><span>XP: ${fmt(x.xp)}/${fmt(need)}</span><span class="small">Tên: ${esc(x.name)} ${x.renameUsed?'':' · <button style="padding:4px 7px;font-size:11px" onclick="rename()">Đổi tên 1 lần</button>'}</span></div><div class="progress"><div style="width:${Math.min(100,x.xp/need*100)}%"></div></div></div><div class="nav">${[['home','Trang chủ'],['expedition','Ải viễn chinh'],['world','Boss Thế giới'],['shop','Cửa hàng'],['bag','Túi đồ'],['forge','Tiệm rèn'],['pets','Thú cưng']].map(([k,t])=>`<button class="${state.screen===k?'active':''}" onclick="chooseScreen('${k}')">${t}</button>`).join('')}</div>`}
+function authView(){return `<div class="card auth"><div class="logo">🧪 Kẻ thách thức Khoa học Tự Nhiên</div><h1>Đăng nhập Cloud</h1><p class="muted">Tài khoản, cấp độ, vàng, kim cương, vật phẩm, trang bị, thú cưng và tiến trình được đồng bộ trên các thiết bị bằng Supabase Cloud. Phiên đăng nhập được Supabase lưu trong local storage của thiết bị.</p>${CLOUD_CONFIGURED?'':'<div class="notice warning"><b>⚠️ Chưa kết nối Cloud</b><br>Điền <code>SUPABASE_CONFIG.url</code> và <code>SUPABASE_CONFIG.key</code> ở đầu file rồi chạy SQL trong <code>supabase_khtn.sql</code>.</div>'}<div class="grid2"><div><h3>Đăng nhập</h3><div class="field"><label>Tài khoản / Email</label><input id="loginUser" autocomplete="username"></div><div class="field"><label>Mật khẩu</label><input id="loginPw" type="password" autocomplete="current-password"></div><button onclick="login()">Đăng nhập</button></div><div><h3>Tạo tài khoản</h3><div class="field"><label>Email tài khoản</label><input id="regUser" type="email" autocomplete="email"></div><div class="field"><label>Mật khẩu</label><input id="regPw" type="password" autocomplete="new-password"></div><button class="good" onclick="register()">Tạo tài khoản</button></div></div><div class="notice small" style="margin-top:12px">Một thiết bị mới chỉ cần đăng nhập đúng tài khoản. Game sẽ tải bản dữ liệu Cloud mới nhất về máy và lưu cache cục bộ để hỗ trợ chơi ổn định.</div></div>`}
+function render(){const app=document.getElementById('app');if(!state.user){app.innerHTML=authView();return}resetWorldIfNeeded();let body='';switch(state.screen){case'home':body=home();break;case'modeSelect':body=modeSelectView();break;case'networkLobby':body=networkLobbyView();break;case'expedition':body=expeditionView();break;case'difficulty':body=difficultyView();break;case'battle':body=expeditionBattleView();break;case'world':body=worldView();break;case'worldBattle':body=worldBattleView();break;case'shop':body=shopView();break;case'bag':body=bagView();break;case'forge':body=forgeView();break;case'pets':body=petsView();break;default:body=home()}app.innerHTML=header()+body;if(roomChannel&&state.room){clearTimeout(window.__roomTrack);window.__roomTrack=setTimeout(async()=>{try{await roomChannel.track(publicPlayerSnapshot());await roomChannel.send({type:'broadcast',event:'player-sync',payload:publicPlayerSnapshot()})}catch(e){}},120)}}
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')saveCloudNow()});
+window.addEventListener('online',()=>{if(state.user)saveCloudNow()});
+bootCloud();
+})();
+</script>
+</body>
+</html>
